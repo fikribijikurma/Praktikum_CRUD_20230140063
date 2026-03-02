@@ -6,5 +6,5 @@ import lombok.Data;
 public class UserDto {
     private String Id;
     private String name;
-    private String age;
+    private int age;
 }
