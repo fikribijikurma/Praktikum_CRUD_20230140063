@@ -5,6 +5,7 @@ import com.example.praktikum1.model.dto.UserAddRequest;
 import com.example.praktikum1.model.dto.UserDto;
 import com.example.praktikum1.model.entity.User;
 import com.example.praktikum1.repository.UserRepository;
+import com.example.praktikum1.service.UserService;
 import com.example.praktikum1.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -28,7 +29,7 @@ public class UserServiceImpl {
         User saveUser = User.builder()
                 .id(UUID.randomUUID().toString())
                 .name(request.getName())
-                .age(request.getAge())
+                .age(String.valueOf(request.getAge()))
                 .build();
 
         userRepository.save(saveUser);
@@ -51,7 +52,7 @@ public class UserServiceImpl {
     }
 
     @Override
-    public UserDto getUserById(String id) {
+    public UserDto getUserByid(String id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("user not found"));
 
@@ -68,7 +69,7 @@ public class UserServiceImpl {
         User user = User.builder()
                 .id(existingUser.getId())
                 .name(request.getName())
-                .age(request.getAge())
+                .age(String.valueOf(request.getAge()))
                 .build();
 
         userRepository.save(user);
@@ -86,4 +87,3 @@ public class UserServiceImpl {
 }
 
 
-}
